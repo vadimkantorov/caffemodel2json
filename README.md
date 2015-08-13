@@ -1,5 +1,5 @@
 ### Description
-A small tool to dump the *.caffemodel to JSON for inspection.
+A small tool to dump Caffe's *.caffemodel to JSON for inspection.
 
 ### Example
 > ./caffemodel2json.py CAFFE_ROOT/src/caffe/proto/caffe.proto model_name.caffemodel > dump.json
