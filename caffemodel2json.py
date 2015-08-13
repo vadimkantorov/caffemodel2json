@@ -42,7 +42,7 @@ def pb2json(pb):
 				js_value.append(ftype(v))
 			if len(js_value) > 64 or (field.name == 'data' and len(js_value) > 8):
 				head_n = 5
-				js_value = js_value[:head_n] + ['... (%d elements more)' % (len(js_value) - head_n)]
+				js_value = js_value[:head_n] + ['(%d elements more)' % (len(js_value) - head_n)]
 		else:
 			js_value = ftype(value)
 		js[field.name] = js_value
