@@ -2,9 +2,12 @@ import os
 import sys
 import json
 import argparse
+import tempfile
 import subprocess
 
-def log(x):
+def log(x, prefix = None):
+	if prefix != None:
+		x = '%8s: %s' % (prefix, x)
 	print >> sys.stderr, x
 
 def pb2json(pb):
@@ -51,28 +54,26 @@ def pb2json(pb):
 parser = argparse.ArgumentParser('Dump model_name.caffemodel to a file JSON format for debugging')
 parser.add_argument('caffe_proto', help = 'Path to caffe.proto (typically located at CAFFE_ROOT/src/caffe/proto/caffe.proto)')
 parser.add_argument('model_caffemodel', help = 'Path to model.caffemodel')
-parser.add_argument('--codegenDir', help = 'Path to a temporary directory to save generated protobuf Python classes', default = '/tmp/caffemodel2json')
+parser.add_argument('--codegenDir', help = 'Path to an existing temporary directory to save generated protobuf Python classes', default = tempfile.mkdtemp())
 args = parser.parse_args()
 
-if not os.path.exists(args.codegenDir):
-	os.makedirs(args.codegenDir)
-log('%8s: calling protoc' % 'protobuf')
+log('calling protoc', 'protobuf')
 subprocess.check_call(['protoc', '--proto_path', os.path.dirname(args.caffe_proto), '--python_out', args.codegenDir, args.caffe_proto])
-log('%8s: generated' % 'protobuf')
+log('generated', 'protobuf')
 
 sys.path.insert(0, args.codegenDir)
 import caffe_pb2
-log('%8s: imported' % 'protobuf')
+log('imported', 'protobuf')
 
 
 netParam = caffe_pb2.NetParameter()
 msg = open(args.model_caffemodel, 'rb').read()
-log('%8s: caffemodel read in memory. Deserialization will take a few minutes. Take a coffee!' % 'model')
+log('caffemodel read in memory. Deserialization will take a few minutes. Take a coffee!', 'model')
 netParam.ParseFromString(msg)
-log('%8s: deserialized' % 'model')
+log('deserialized', 'model')
 
 json.dump(pb2json(netParam), sys.stdout, indent = 2)
-log('%8s: json saved' % 'model')
+log('json saved', 'model')
 
 log('')
 log('ALLOK. Quitting')
