@@ -1,7 +1,7 @@
 ### Description
 A small tool to dump Caffe's \*.caffemodel to JSON for inspection (\*.prototxt files is not needed). Will not print all the weights to make the output concise.
 
-### Example
+### Usage
 > ./caffemodel2json.py CAFFE_ROOT/src/caffe/proto/caffe.proto model_name.caffemodel > dump.json
 
 Output would be something like:
