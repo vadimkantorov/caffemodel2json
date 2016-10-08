@@ -10,7 +10,7 @@ def log(x, prefix = None):
 		x = '%8s: %s' % (prefix, x)
 	print >> sys.stderr, x
 
-def pb2json(pb):
+def pb2json(pb, print_arrays):
 	from google.protobuf.descriptor import FieldDescriptor as FD
 	_ftype2js = {
 		FD.TYPE_DOUBLE: float,
@@ -43,7 +43,7 @@ def pb2json(pb):
 			js_value = []
 			for v in value:
 				js_value.append(ftype(v))
-			if len(js_value) > 64 or (field.name == 'data' and len(js_value) > 8):
+			if not print_arrays and (len(js_value) > 64 or (field.name == 'data' and len(js_value) > 8)):
 				head_n = 5
 				js_value = js_value[:head_n] + ['(%d elements more)' % (len(js_value) - head_n)]
 		else:
@@ -52,8 +52,9 @@ def pb2json(pb):
 	return js
 
 parser = argparse.ArgumentParser('Dump model_name.caffemodel to a file JSON format for debugging')
-parser.add_argument('caffe_proto', help = 'Path to caffe.proto (typically located at CAFFE_ROOT/src/caffe/proto/caffe.proto)')
+parser.add_argument('caffe.proto', help = 'Path to caffe.proto (typically located at CAFFE_ROOT/src/caffe/proto/caffe.proto)', dest = 'caffe_proto')
 parser.add_argument('model_caffemodel', help = 'Path to model.caffemodel')
+parser.add_argument('--data', help = 'Print all arrays in full', action = 'store_true')
 parser.add_argument('--codegenDir', help = 'Path to an existing temporary directory to save generated protobuf Python classes', default = tempfile.mkdtemp())
 args = parser.parse_args()
 
@@ -72,7 +73,7 @@ log('caffemodel read in memory. Deserialization will take a few minutes. Take a 
 netParam.ParseFromString(msg)
 log('deserialized', 'model')
 
-json.dump(pb2json(netParam), sys.stdout, indent = 2)
+json.dump(pb2json(netParam, args.data), sys.stdout, indent = 2)
 log('json saved', 'model')
 
 log('')
