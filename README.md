@@ -11,18 +11,6 @@ alias caffemodel2json='python2.7 <(curl -sS https://raw.githubusercontent.com/va
 caffemodel2json https://raw.githubusercontent.com/BVLC/caffe/master/src/caffe/proto/caffe.proto model_name.caffemodel > dump.json
 ```
 
-Output would be something like:
-```
-protobuf: calling protoc
-protobuf: generated
-protobuf: imported
-   model: caffemodel read in memory. Deserialization will take a few minutes. Take a coffee!
-   model: deserialized
-   model: json saved
-
-ALLOK. Quitting
-```
-
 ### Dependencies
 1. Python
 2. protobuf (with Python bindings)
