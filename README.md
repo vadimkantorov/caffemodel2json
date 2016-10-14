@@ -17,4 +17,4 @@ caffemodel2json https://raw.githubusercontent.com/BVLC/caffe/master/src/caffe/pr
 3. Caffe's caffe.proto (or from a Caffe's fork, it's important if you are inspecting a model that implements new Caffe layers)
 
 ### Credits
-The tool reuses a function from https://github.com/dpp-name/protobuf-json. Great thanks to Paul Dovbush for making it available.
+This tool reuses a function from https://github.com/dpp-name/protobuf-json. Great thanks to Paul Dovbush for making it available.
