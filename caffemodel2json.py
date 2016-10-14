@@ -63,7 +63,7 @@ local_caffe_proto = os.path.join(args.codegenDir, os.path.basename(args.caffe_pr
 with open(local_caffe_proto, 'w') as f:
 	f.write((urllib2.urlopen(args.caffe_proto) if 'http:' in args.caffe_proto else open(args.caffe_proto)).read())
 	
-subprocess.check_call(['protoc', '--proto_path', args.codegenDir, '--python_out', args.codegenDir, local_caffe_proto)
+subprocess.check_call(['protoc', '--proto_path', args.codegenDir, '--python_out', args.codegenDir, local_caffe_proto])
 log('generated', 'protobuf')
 
 sys.path.insert(0, args.codegenDir)
