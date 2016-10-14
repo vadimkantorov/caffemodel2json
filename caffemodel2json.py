@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import urllib2
 import argparse
 import tempfile
 import subprocess
@@ -52,8 +53,8 @@ def pb2json(pb, print_arrays):
 	return js
 
 parser = argparse.ArgumentParser('Dump model_name.caffemodel to a file JSON format for debugging')
-parser.add_argument('caffe.proto', help = 'Path to caffe.proto (typically located at CAFFE_ROOT/src/caffe/proto/caffe.proto)', metavar = 'caffe_proto')
-parser.add_argument('model_caffemodel', help = 'Path to model.caffemodel')
+parser.add_argument(metavar = 'caffe.proto', dest = 'caffe_proto', help = 'Path to caffe.proto (typically located at CAFFE_ROOT/src/caffe/proto/caffe.proto)')
+parser.add_argument(metavar = 'model.caffemodel', dest = 'model_caffemodel', help = 'Path to model.caffemodel')
 parser.add_argument('--data', help = 'Print all arrays in full', action = 'store_true')
 parser.add_argument('--codegenDir', help = 'Path to an existing temporary directory to save generated protobuf Python classes', default = tempfile.mkdtemp())
 args = parser.parse_args()
