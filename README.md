@@ -5,6 +5,11 @@ A small tool to dump Caffe's \*.caffemodel to JSON for inspection (\*.prototxt f
 ```shell
 ./caffemodel2json.py CAFFE_ROOT/src/caffe/proto/caffe.proto model_name.caffemodel > dump.json
 ```
+or
+```shell
+alias caffemodel2json='python2.7 <(curl -sS https://raw.githubusercontent.com/vadimkantorov/caffemodel2json/master/caffemodel2json.py)'
+caffemodel2json CAFFE_ROOT/src/caffe/proto/caffe.proto model_name.caffemodel > dump.json
+```
 
 Output would be something like:
 ```
