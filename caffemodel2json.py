@@ -25,15 +25,12 @@ def pb2json(pb, print_arrays):
 		FD.TYPE_SFIXED64: float,
 		FD.TYPE_SINT32: int,
 		FD.TYPE_SINT64: long,
-		FD.TYPE_MESSAGE: lambda x: pb2json(x, print_arrays = print_arrays)
+		FD.TYPE_MESSAGE: lambda x: pb2json(x, print_arrays = print_arrays),
+		'unknown' : lambda x: 'Unknown field type: %s' % x
 	}
 	js = {}
 	for field, value in pb.ListFields():
-		if field.type in _ftype2js:
-			ftype = _ftype2js[field.type]
-		else:
-			print >> sys.stderr, "WARNING: Field %s.%s of type '%d' is not supported" % (pb.__class__.__name__, field.name, field.type, )
-			ftype = lambda x: 'Unknown field type: %s' % x
+		ftype = _ftype2js[field.type] if field.type in _ftype2js else _ftype2js['unknown']
 		if field.label == FD.LABEL_REPEATED:
 			js_value = map(ftype, value)
 			if not print_arrays and (field.name == 'data' and len(js_value) > 8):
