@@ -2,7 +2,7 @@
 A small tool to dump Caffe's \*.caffemodel and \*.binaryproto files to JSON for inspection (\*.prototxt files is not needed).
 
 # Usage
-####To dump model structure without weights (unless `--data` switch is used) to JSON:
+### To dump model structure without weights (unless `--data` switch is used) to JSON:
 ```shell
 ./caffemodel2json.py CAFFE_ROOT/src/caffe/proto/caffe.proto model_name.caffemodel > dump.json
 ```
@@ -12,7 +12,7 @@ alias caffemodel2json='python2.7 <(curl -sS https://raw.githubusercontent.com/va
 caffemodel2json https://raw.githubusercontent.com/BVLC/caffe/master/src/caffe/proto/caffe.proto model_name.caffemodel > dump.json
 ```
 
-####To dump a binaryproto:
+### To dump a binaryproto:
 ```shell
 wget http://dl.caffe.berkeleyvision.org/caffe_ilsvrc12.tar.gz
 mkdir -p imagenet_mean && tar -xf caffe_ilsvrc12.tar.gz -C imagenet_mean
