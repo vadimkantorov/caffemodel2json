@@ -34,6 +34,7 @@ def pb2json(pb, print_arrays):
 			ftype = _ftype2js[field.type]
 		else:
 			print >> sys.stderr, "WARNING: Field %s.%s of type '%d' is not supported" % (pb.__class__.__name__, field.name, field.type, )
+			ftype = lambda x: 'Unknown field type: %s' % x
 		if field.label == FD.LABEL_REPEATED:
 			js_value = []
 			for v in value:
