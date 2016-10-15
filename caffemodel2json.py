@@ -7,6 +7,7 @@ import tempfile
 import subprocess
 from google.protobuf.descriptor import FieldDescriptor as FD
 
+# inspired by https://github.com/dpp-name/protobuf-json/blob/master/protobuf_json.py
 def pb2json(pb, print_arrays):
 	_ftype2js = {
 		FD.TYPE_DOUBLE: float,
