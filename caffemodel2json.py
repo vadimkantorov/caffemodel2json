@@ -5,9 +5,9 @@ import urllib2
 import argparse
 import tempfile
 import subprocess
+from google.protobuf.descriptor import FieldDescriptor as FD
 
 def pb2json(pb, print_arrays):
-	from google.protobuf.descriptor import FieldDescriptor as FD
 	_ftype2js = {
 		FD.TYPE_DOUBLE: float,
 		FD.TYPE_FLOAT: float,
@@ -28,17 +28,14 @@ def pb2json(pb, print_arrays):
 		FD.TYPE_MESSAGE: lambda x: pb2json(x, print_arrays = print_arrays)
 	}
 	js = {}
-	fields = pb.ListFields()	#only filled (including extensions)
-	for field,value in fields:
+	for field, value in pb.ListFields():
 		if field.type in _ftype2js:
 			ftype = _ftype2js[field.type]
 		else:
 			print >> sys.stderr, "WARNING: Field %s.%s of type '%d' is not supported" % (pb.__class__.__name__, field.name, field.type, )
 			ftype = lambda x: 'Unknown field type: %s' % x
 		if field.label == FD.LABEL_REPEATED:
-			js_value = []
-			for v in value:
-				js_value.append(ftype(v))
+			js_value = map(ftype, value)
 			if not print_arrays and (field.name == 'data' and len(js_value) > 8):
 				head_n = 5
 				js_value = js_value[:head_n] + ['(%d elements more)' % (len(js_value) - head_n)]
