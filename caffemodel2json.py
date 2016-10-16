@@ -57,7 +57,7 @@ subprocess.check_call(['protoc', '--proto_path', os.path.dirname(local_caffe_pro
 sys.path.insert(0, args.codegenDir)
 import caffe_pb2
 
-deserialized = caffe_pb2.NetParameter() if os.path.splitext(args.model_caffemodel)[0] == '.caffemodel' else caffe_pb2.BlobProto()
+deserialized = caffe_pb2.NetParameter() if os.path.splitext(args.model_caffemodel)[1] == '.caffemodel' else caffe_pb2.BlobProto()
 deserialized.ParseFromString(open(args.model_caffemodel, 'rb').read())
 
 json.dump(pb2json(deserialized, args.data), sys.stdout, indent = 2)
