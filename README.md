@@ -23,3 +23,6 @@ mkdir -p imagenet_mean && tar -xf caffe_ilsvrc12.tar.gz -C imagenet_mean
 1. Python
 2. protobuf (with Python bindings)
 3. Caffe's caffe.proto (or from a Caffe's fork, it's important if you are inspecting a model that implements new Caffe layers)
+
+# License
+MIT
