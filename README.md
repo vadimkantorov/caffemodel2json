@@ -1,5 +1,5 @@
 # Description
-A small tool to dump Caffe's \*.caffemodel and \*.binaryproto files to JSON for inspection (\*.prototxt files is not needed). By default [caffe.proto](https://raw.githubusercontent.com/BVLC/caffe/master/src/caffe/proto/caffe.proto) from the official Caffe repository is used.
+A small tool to dump Caffe's \*.caffemodel and \*.binaryproto files to JSON for inspection (\*.prototxt files is not needed). By default [caffe.proto](https://raw.githubusercontent.com/BVLC/caffe/master/src/caffe/proto/caffe.proto) from the official Caffe repository is used. Python and protobuf with Python bindings are dependencies.
 
 # Usage
 ```shell
@@ -14,11 +14,6 @@ wget http://dl.caffe.berkeleyvision.org/caffe_ilsvrc12.tar.gz
 mkdir -p imagenet_mean && tar -xf caffe_ilsvrc12.tar.gz -C imagenet_mean
 ./caffemodel2json.py imagenet_mean/imagenet_mean.binaryproto --data > imagenet_mean.json
 ```
-
-# Dependencies
-1. Python
-2. protobuf (with Python bindings)
-3. (optional) Caffe's caffe.proto (or from a Caffe's fork, it's important if you are inspecting a model that implements new Caffe layers)
 
 # License
 MIT
